@@ -26,6 +26,8 @@ public class Player extends Entity {
 	
 	private int heading = 270;
 	
+	private long tickCount = 0;
+	
 
 	public Player(int x, int y) {
 		super(x,y,size,speed,image,type);
@@ -36,7 +38,10 @@ public class Player extends Entity {
 	}
 	
 	public void tick() {
+		if (tickCount == 2147483646)
+			tickCount = 0;
 		
+		tickCount++;
 	}
 	
 	public void render(Graphics2D g) {
@@ -64,6 +69,7 @@ public class Player extends Entity {
 				case 4: x = x - speed;
 					break;
 			}
+			g.drawImage(image, x, y, size, size, null);
 		}
 		else
 		{
@@ -92,26 +98,50 @@ public class Player extends Entity {
 	
 	public void moveRight (Graphics2D g)
 	{
-		
-		image = new Loader().loadResource("Player_WalkRight_Still", "png");
-		g.drawImage(image,x,y,size,size,null);
+		int imageId = 5;
 		x++;
-		try {
-			TimeUnit.MILLISECONDS.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		if (tickCount % 5 == 0) {
+			if (imageId > 3 && imageId <=5)
+			{
+				if (imageId == 4)
+					imageId = 3;
+				else
+					imageId--;
+				setImage(imageId);
+			}
 		}
-		image = new Loader().loadResource("Player_WalkRight_Left", "png");
-		g.drawImage(image,x,y,size,size,null);
-		x++;
-		try {
-			TimeUnit.MILLISECONDS.sleep(10);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		image = new Loader().loadResource("Player_WalkRight_Step", "png");
-		g.drawImage(image,x,y,size,size,null);
 	}
+	
+	public void setImage(int imageID) {
+		switch (imageID) {
+		case 0: image = new Loader().loadResource("Player_WalkBack_Still", "png");
+			break;
+		case 1: image = new Loader().loadResource("Player_WalkBack_Step", "png");
+			break;
+		case 2: image = new Loader().loadResource("Player_WalkBack_Left", "png");
+			break;
+		case 3: image = new Loader().loadResource("Player_WalkRight_Still", "png");
+			break;
+		case 4: image = new Loader().loadResource("Player_WalkRight_Step", "png");
+			break;
+		case 5: image = new Loader().loadResource("Player_WalkRight_Left", "png");
+			break;	
+		case 6: image = new Loader().loadResource("Player_WalkFront_Still", "png");
+			break;
+		case 7: image = new Loader().loadResource("Player_WalkFront_Step", "png");
+			break;
+		case 8: image = new Loader().loadResource("Player_WalkFront_Left", "png");
+			break;	
+		case 9: image = new Loader().loadResource("Player_WalkLeft_Still", "png");
+			break;
+		case 10: image = new Loader().loadResource("Player_WalkLeft_Step", "png");
+			break;
+		case 11: image = new Loader().loadResource("Player_WalkLeft_Left", "png");
+			break;
+		}
+	}
+	
+	
 	
 	
 
