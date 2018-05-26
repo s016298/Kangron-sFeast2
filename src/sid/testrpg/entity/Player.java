@@ -13,7 +13,7 @@ public class Player extends Entity {
 	
 	public int x, y;
 	
-	public static int size = 16;
+	public static int size = 30;
 	public static int speed = 5;
 	
 	public static BufferedImage image = new Loader().loadResource("Player_WalkBack_Still", "png");
@@ -60,13 +60,13 @@ public class Player extends Entity {
 		{
 			switch (movementCommand)
 			{
-				case 1: y = y - speed;
+				case 1: y = y - 1;
 					break;
-				case 2: moveRight(g);
+				case 2: x+=1;
 					break;
-				case 3: y = y + speed;
+				case 3: y = y + 1;
 					break;
-				case 4: x = x - speed;
+				case 4: x = x - 1;
 					break;
 			}
 			g.drawImage(image, x, y, size, size, null);
@@ -96,21 +96,6 @@ public class Player extends Entity {
 		}
 	}
 	
-	public void moveRight (Graphics2D g)
-	{
-		int imageId = 5;
-		x++;
-		if (tickCount % 5 == 0) {
-			if (imageId > 3 && imageId <=5)
-			{
-				if (imageId == 4)
-					imageId = 3;
-				else
-					imageId--;
-				setImage(imageId);
-			}
-		}
-	}
 	
 	public void setImage(int imageID) {
 		switch (imageID) {
