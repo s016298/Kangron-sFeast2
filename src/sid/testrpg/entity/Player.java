@@ -16,7 +16,7 @@ public class Player extends Entity {
 	public static int size = 16;
 	public static int speed = 5;
 	
-	public static BufferedImage image = new Loader().loadResource("Player_WalkBack_Still", "png");
+	public static BufferedImage image = new Loader().loadResource("Player_WalkFront_Still", "png");
 	
 	public static EntityType type = EntityType.PLAYER;
 	
