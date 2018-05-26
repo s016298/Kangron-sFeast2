@@ -28,6 +28,10 @@ public class Player extends Entity {
 	
 	private long tickCount = 0;
 	
+	private int animCnt = 0;			//stage of animation
+	
+	private int imageNum = 0;			//Image that should be used
+	
 
 	public Player(int x, int y) {
 		super(x,y,size,speed,image,type);
@@ -73,7 +77,11 @@ public class Player extends Entity {
 		}
 		else
 		{
-			image = new Loader().loadResource("Player_WalkBack_Still", "png");
+			switch (movementCommand){
+			
+//				case 1: setImage()
+//			
+			}
 			g.drawImage(image, x, y, size, size, null);
 		}
 	}
