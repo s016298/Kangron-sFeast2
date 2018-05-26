@@ -16,7 +16,7 @@ public class Player extends Entity {
 	public static int size = 30;
 	public static int speed = 5;
 	
-	public static BufferedImage image = new Loader().loadResource("Player_WalkBack_Still", "png");
+	public static BufferedImage image = new Loader().loadResource("Player_WalkFront_Still", "png");
 	
 	public static EntityType type = EntityType.PLAYER;
 	
@@ -73,21 +73,15 @@ public class Player extends Entity {
 				case 4: x = x - 1;
 					break;
 			}
-			g.drawImage(image, x, y, size, size, null);
-		}
-		else
-		{
-			switch (movementCommand){
 			
-//				case 1: setImage()
-//			
-			}
-			g.drawImage(image, x, y, size, size, null);
 		}
+		
+		g.drawImage(image, x, y, size, size, null);
 	}
 	
 	public void stop(int command)
 	{
+		animCnt=0;
 		movementCommand = command;
 		if (command >= 1 && command <= 4)
 		{
@@ -102,6 +96,9 @@ public class Player extends Entity {
 		{
 			isMoving = true;
 		}
+		animate();
+		animCnt++;
+		
 	}
 	
 	
@@ -109,29 +106,61 @@ public class Player extends Entity {
 		switch (imageID) {
 		case 0: image = new Loader().loadResource("Player_WalkBack_Still", "png");
 			break;
-		case 1: image = new Loader().loadResource("Player_WalkBack_Step", "png");
+		case 1: image = new Loader().loadResource("Player_WalkBack_Left", "png");
 			break;
-		case 2: image = new Loader().loadResource("Player_WalkBack_Left", "png");
+		case 2: image = new Loader().loadResource("Player_WalkBack_Step", "png");
 			break;
 		case 3: image = new Loader().loadResource("Player_WalkRight_Still", "png");
 			break;
-		case 4: image = new Loader().loadResource("Player_WalkRight_Step", "png");
-			break;
-		case 5: image = new Loader().loadResource("Player_WalkRight_Left", "png");
+		case 4: image = new Loader().loadResource("Player_WalkRight_Left", "png");
 			break;	
+		case 5: image = new Loader().loadResource("WalkRight_Step", "png");
+			break;
 		case 6: image = new Loader().loadResource("Player_WalkFront_Still", "png");
 			break;
-		case 7: image = new Loader().loadResource("Player_WalkFront_Step", "png");
-			break;
-		case 8: image = new Loader().loadResource("Player_WalkFront_Left", "png");
+		case 7: image = new Loader().loadResource("Player_WalkFront_Left", "png");
 			break;	
+		case 8: image = new Loader().loadResource("Player_WalkFront_Step", "png");
+			break;
 		case 9: image = new Loader().loadResource("Player_WalkLeft_Still", "png");
 			break;
-		case 10: image = new Loader().loadResource("Player_WalkLeft_Step", "png");
+		case 10: image = new Loader().loadResource("Player_WalkLeft_Left", "png");
 			break;
-		case 11: image = new Loader().loadResource("Player_WalkLeft_Left", "png");
+		case 11: image = new Loader().loadResource("Player_WalkLeft_Step", "png");
 			break;
+
 		}
+	}
+	
+	public void animate(){
+		
+		//cycle through animation images based on direction.
+		if (movementCommand == 1){
+			
+			imageNum++;
+			if(animCnt==0)imageNum = 0;
+			if(imageNum>2)imageNum = 0;
+		}
+		if (movementCommand == 2){
+			
+			imageNum++;
+			if(animCnt==0)imageNum = 3;
+			if(imageNum>5)imageNum = 3;
+		}
+		if (movementCommand == 3){
+			
+			imageNum++;
+			if(animCnt==0)imageNum = 6;
+			if(imageNum>8)imageNum = 6;
+		}
+		if (movementCommand == 4){
+			
+			imageNum++;
+			if(animCnt==0)imageNum = 9;
+			if(imageNum>11)imageNum = 9;
+		}
+		
+		setImage(imageNum);
 	}
 	
 	
