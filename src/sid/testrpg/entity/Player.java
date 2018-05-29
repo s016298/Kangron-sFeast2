@@ -30,7 +30,9 @@ public class Player extends Entity {
 	
 	private int animCnt = 0;			//stage of animation
 	
-	private int imageNum = 0;			//Image that should be used
+	private int imageNum = 6;			//Image that should be used
+	
+	private int lastMove = 6;				//Last move before stopping movement
 	
 
 	public Player(int x, int y) {
@@ -62,6 +64,7 @@ public class Player extends Entity {
 		
 		if (isMoving)
 		{
+			
 			switch (movementCommand)
 			{
 				case 1: y = y - 1;
@@ -74,18 +77,47 @@ public class Player extends Entity {
 					break;
 			}
 			
+			if(tickCount%7==0){
+				animate();
+				animCnt++;
+			}
+			
 		}
+		else{
+			switch (lastMove){
+			case 1:
+				setImage(0);
+				break;
+			case 2:
+				setImage(3);
+				break;
+			case 3:
+				setImage(6);
+				break;
+			case 4:
+				setImage(9);
+				break;
+			default:
+				setImage(0);
+				break;
+			}
+			
+			}
+		
+
 		
 		g.drawImage(image, x, y, size, size, null);
 	}
 	
 	public void stop(int command)
 	{
+		if(command >= 1 && command <= 4)lastMove=movementCommand;
 		animCnt=0;
 		movementCommand = command;
 		if (command >= 1 && command <= 4)
 		{
 			isMoving = false;
+			
 		}
 	}
 	
@@ -96,8 +128,7 @@ public class Player extends Entity {
 		{
 			isMoving = true;
 		}
-		animate();
-		animCnt++;
+
 		
 	}
 	
@@ -114,7 +145,7 @@ public class Player extends Entity {
 			break;
 		case 4: image = new Loader().loadResource("Player_WalkRight_Left", "png");
 			break;	
-		case 5: image = new Loader().loadResource("WalkRight_Step", "png");
+		case 5: image = new Loader().loadResource("edited", "png");
 			break;
 		case 6: image = new Loader().loadResource("Player_WalkFront_Still", "png");
 			break;
